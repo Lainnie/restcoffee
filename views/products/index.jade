@@ -2,4 +2,4 @@ extends ../layout
 block content
 	- each product in products
 		h6
-			a(href="products/"+product._id) #{product.name}
+			a(href="/products/"+product._id) #{product.name}

@@ -48,14 +48,16 @@
           return res.statusCode = 200;
         } else {
           res.send(err);
-          return res.statusCode = 500;
+          return res.statusCode = 418;
         }
       });
     },
     "delete": function(req, res) {
       return Product.findByIdAndRemove(req.params.id, function(err) {
         if (!err) {
-          return res.send({});
+          return res.render('products', {
+            'products': products
+          });
         } else {
           res.send(err);
           return res.statusCode = 500;

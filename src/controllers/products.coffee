@@ -33,17 +33,17 @@ module.exports =
   update: (req, res) ->
   	Product.findByIdAndUpdate req.params.id, {"$set": req.body}, (err, product) ->
   		if not err
-  			res.send product
+  			res.send product 
   			res.statusCode = 200
   		else
   		  res.send err
-  		  res.statusCode = 500
+  		  res.statusCode = 418
 
   # delete item
   delete: (req, res) ->
   	Product.findByIdAndRemove req.params.id, (err) ->
   		if not err
-  			res.send {}
+        res.render 'products', 'products': products
   		else
   			res.send err
   			res.statusCode = 500
