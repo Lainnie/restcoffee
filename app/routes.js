@@ -16,17 +16,20 @@
     app.all('/private', checkAuth, function(req, res, next) {
       return routeMvc('private', 'index', req, res, next);
     });
-    app.all('/', function(req, res, next) {
-      return routeMvc('index', 'index', req, res, next);
-    });
-    app.all('/:controller', function(req, res, next) {
+    app.get('/:controller', function(req, res, next) {
       return routeMvc(req.params.controller, 'index', req, res, next);
     });
-    app.all('/:controller/:method', function(req, res, next) {
-      return routeMvc(req.params.controller, req.params.method, req, res, next);
+    app.get('/:controller/:id', function(req, res, next) {
+      return routeMvc(req.params.controller, 'get', req, res, next);
     });
-    app.all('/:controller/:method/:id', function(req, res, next) {
-      return routeMvc(req.params.controller, req.params.method, req, res, next);
+    app.post('/:controller', function(req, res, next) {
+      return routeMvc(req.params.controller, 'create', req, res, next);
+    });
+    app.put('/:controller/:id', function(req, res, next) {
+      return routeMvc(req.params.controller, 'update', req, res, next);
+    });
+    app.del('/:controller/:id', function(req, res, next) {
+      return routeMvc(req.params.controller, 'delete', req, res, next);
     });
     return app.all('/*', function(req, res) {
       console.warn("error 404: ", req.url);

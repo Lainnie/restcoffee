@@ -6,8 +6,8 @@
 
   module.exports = {
     index: function(req, res) {
-      return res.render('posts/new', {
-        title: "dfjdfjndleny"
+      return Post.find({}, function(err, posts) {
+        return res.send(posts);
       });
     },
     create: function(req, res) {

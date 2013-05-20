@@ -5,7 +5,8 @@ module.exports =
 
   # Lists all posts
   index: (req, res) ->
-    res.render 'posts/new', {title: "dfjdfjndleny"}
+    Post.find {}, (err, posts) ->
+      res.send posts
 
   # Creates new post with data from `req.body`
   create: (req, res) ->
@@ -44,5 +45,4 @@ module.exports =
       else
         res.send err
         res.statusCode = 500
-      
   
