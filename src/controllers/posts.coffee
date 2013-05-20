@@ -5,12 +5,11 @@ module.exports =
 
   # Lists all posts
   index: (req, res) ->
-    Post.find {}, (err, posts) ->
-      res.send posts
-      
+    res.render 'posts/new', {title: "dfjdfjndleny"}
+
   # Creates new post with data from `req.body`
   create: (req, res) ->
-    post = new Post req.body
+    post = new Post req.body.post
     post.save (err, post) ->
       if not err
         res.send post

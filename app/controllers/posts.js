@@ -6,14 +6,14 @@
 
   module.exports = {
     index: function(req, res) {
-      return Post.find({}, function(err, posts) {
-        return res.send(posts);
+      return res.render('posts/new', {
+        title: "dfjdfjndleny"
       });
     },
     create: function(req, res) {
       var post;
 
-      post = new Post(req.body);
+      post = new Post(req.body.post);
       return post.save(function(err, post) {
         if (!err) {
           res.send(post);

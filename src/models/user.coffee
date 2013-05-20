@@ -2,9 +2,9 @@ mongoose = require 'mongoose'
 
 # User model
 User = new mongoose.Schema(
-  s: String
-  body: String
-  url: String
+  login: String
+  password: String
+  email: String
 )
 
 module.exports = mongoose.model 'User', User
