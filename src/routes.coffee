@@ -15,6 +15,9 @@ module.exports = (app) ->
   app.all '/private', checkAuth, (req, res, next) ->
     routeMvc('private', 'index', req, res, next)  
   
+  app.get '/', (req, res, next) ->
+    routeMvc('products', 'index', req, res, next)
+
   app.get '/:controller', (req, res, next) ->
     routeMvc(req.params.controller, 'index', req, res, next)
 
@@ -38,10 +41,18 @@ module.exports = (app) ->
 
 # render the page based on controller name, method and id
 routeMvc = (controllerName, methodName, req, res, next) ->
+  try
+    controller = require "./controllers/" + controllerName
+    controller[methodName] req, res
+  catch e
+    console.warn "controller not found: " + controllerName, e
+    next()
+    return
+
+###
   controllerName = 'index' if not controllerName?
   controller = null
   try
-    controller = require "./controllers/" + controllerName
   catch e
     console.warn "controller not found: " + controllerName, e
     next()
@@ -53,3 +64,4 @@ routeMvc = (controllerName, methodName, req, res, next) ->
   else
     console.warn 'method not found: ' + methodName
     next()
+###

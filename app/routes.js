@@ -16,6 +16,9 @@
     app.all('/private', checkAuth, function(req, res, next) {
       return routeMvc('private', 'index', req, res, next);
     });
+    app.get('/', function(req, res, next) {
+      return routeMvc('products', 'index', req, res, next);
+    });
     app.get('/:controller', function(req, res, next) {
       return routeMvc(req.params.controller, 'index', req, res, next);
     });
@@ -39,28 +42,34 @@
   };
 
   routeMvc = function(controllerName, methodName, req, res, next) {
-    var actionMethod, controller, data, e;
+    var controller, e;
 
-    if (controllerName == null) {
-      controllerName = 'index';
-    }
-    controller = null;
     try {
       controller = require("./controllers/" + controllerName);
+      return controller[methodName](req, res);
     } catch (_error) {
       e = _error;
       console.warn("controller not found: " + controllerName, e);
       next();
-      return;
-    }
-    data = null;
-    if (typeof controller[methodName] === 'function') {
-      actionMethod = controller[methodName].bind(controller);
-      return actionMethod(req, res, next);
-    } else {
-      console.warn('method not found: ' + methodName);
-      return next();
     }
   };
+
+  /*
+    controllerName = 'index' if not controllerName?
+    controller = null
+    try
+    catch e
+      console.warn "controller not found: " + controllerName, e
+      next()
+      return
+    data = null
+    if typeof controller[methodName] is 'function'
+      actionMethod = controller[methodName].bind controller
+      actionMethod req, res, next
+    else
+      console.warn 'method not found: ' + methodName
+      next()
+  */
+
 
 }).call(this);
